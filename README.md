@@ -21,7 +21,7 @@ Step 1 — Plan & Architect: Designed the data flow and analytical framework; de
 
 Step 2 — Process & Clean Data Loaded raw Excel files into Databricks; converted UTC timestamps to South African time (Africa/Johannesburg / UTC+2); standardised Duration 2 from H:MM:SS format to seconds; joined user profile and viewership transaction tables using a LEFT JOIN on UserID.
 
-Step 3 — Analyze in Databricks (SQL). Wrote SQL queries covering monthly active users, peak viewing hours, consumption by channel, demographic breakdowns (age group, gender, race, province), low consumption days, top channels per segment, user segmentation by engagement level, and churn analysis.
+Step 3 — Analyze in Databricks (SQL). Wrote SQL queries covering monthly active users, peak viewing hours, consumption by channel, demographic breakdowns (age group, gender, province), low consumption days, top channels per segment, user segmentation by engagement level, and churn analysis.
 
 Step 4 — Present to Stakeholders: Delivered a 20-minute data story with visuals and actionable growth recommendations targeting user acquisition, retention, and content strategy.
 
