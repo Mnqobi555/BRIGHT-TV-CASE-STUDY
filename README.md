@@ -12,6 +12,7 @@ What content would you recommend to increase consumption on days with low consum
 What type of initiatives would you recommend to grow BrightTV's user base further?
 
 Project Steps
+
 Step 1 — Plan & Architect: Designed the data flow and analytical framework; defined core KPIs around viewership, session duration, and user engagement.
 
 Step 2 — Process & Clean Data Loaded raw Excel files into Databricks; converted UTC timestamps to South African time (Africa/Johannesburg / UTC+2); standardised Duration 2 from H:MM:SS format to seconds; joined user profile and viewership transaction tables using a LEFT JOIN on UserID.
