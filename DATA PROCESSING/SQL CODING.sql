@@ -1,4 +1,3 @@
-
 SELECT 
     A.UserID0,
     B.Name,
@@ -13,21 +12,24 @@ SELECT
         WHEN B.Age >= 50 THEN 'Senior (50+)'
         ELSE 'Unknown'
     END AS age_group,
+    CASE 
+        WHEN HOUR(CAST(A.Time AS TIMESTAMP)) BETWEEN 5 AND 8   THEN 'Morning'
+        WHEN HOUR(CAST(A.Time AS TIMESTAMP)) BETWEEN 9 AND 11  THEN 'Mid-Morning'
+        WHEN HOUR(CAST(A.Time AS TIMESTAMP)) BETWEEN 12 AND 16 THEN 'Afternoon'
+        WHEN HOUR(CAST(A.Time AS TIMESTAMP)) BETWEEN 17 AND 21 THEN 'Evening'
+        ELSE 'Night'
+    END AS time_bucket,
     B.Province,
     B.Gender,
     B.Race,
     A.Date,
     A.Time,
-    from_utc_timestamp(
-        to_timestamp(concat(A.Date, ' ', A.Time), 'M/d/yyyy HH:mm'), 
-        'Africa/Johannesburg'
-    ) AS sa_time,
+    from_utc_timestamp(to_timestamp(concat(A.Date, ' ', A.Time), 'M/d/yyyy HH:mm'), 'Africa/Johannesburg') AS sa_time,
     A.Channel2,
     A.`Duration 2`
 FROM workspace.default.viewership_separate AS A
 LEFT JOIN workspace.default.user_profile_separate AS B
     ON A.UserID0 = B.UserID;
-
 
 
 --THIS IS JUST TO CHECK IF THE TABLE IS LOADED CORRECTLY AND I AM ABLE TO READ IT PROPERLY
@@ -89,7 +91,6 @@ SELECT min(`Duration 2`) as min_duration, max(`Duration 2`) as max_duration
 FROM workspace.default.viewership_separate;
 
 
-
 -------------------------------------------------------------------------
 --6.TOTAL NUMBER OF PROVINCES IN THE DATASET AND CONSUMPTION BY PROVINCE
 -------------------------------------------------------------------------
@@ -147,7 +148,7 @@ ORDER BY total_sessions DESC;
 
 
 --------------------------------------------------------------
---9. FACTORS INFLUENCING CONSUMPTION 
+--9. FACTORS INFLUENCING CONSUMPTION AND THE ACTUAL CONSUMERS
 --------------------------------------------------------------
 
 SELECT 
@@ -175,6 +176,18 @@ SELECT
         FROM `workspace`.`default`.`user_profile_separate`
         WHERE Age IS NOT NULL
         ORDER BY age_group;
+
+SELECT 
+    *,
+    CASE 
+        WHEN HOUR(CAST(Time AS TIMESTAMP)) BETWEEN 5 AND 8   THEN 'Morning'
+        WHEN HOUR(CAST(Time AS TIMESTAMP)) BETWEEN 9 AND 11  THEN 'Mid-Morning'
+        WHEN HOUR(CAST(Time AS TIMESTAMP)) BETWEEN 12 AND 16 THEN 'Afternoon'
+        WHEN HOUR(CAST(Time AS TIMESTAMP)) BETWEEN 17 AND 21 THEN 'Evening'
+        ELSE 'Night'
+    END AS time_bucket
+FROM `workspace`.`default`.`viewership_separate`;
+
 
 --------------------------------------------------------
 --10.LOW CONSUMPTION DAYS AND CONTENT RECOMMENDATIONS
